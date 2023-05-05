@@ -1,0 +1,45 @@
+version: "3.3"
+services:
+  db:
+    restart: always
+    container_name: db
+    image: postgres:15.2
+    environment:
+      POSTGRES_DB: "${DB_DATABASE}"
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ./database/initdb:/docker-entrypoint-initdb.d
+      - ./database/pgdata:/var/lib/postgresql/data      
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+  redis:
+    container_name: redis
+    image: redis:7.0-alpine
+  backend:
+    restart: always
+    container_name: backend
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+      - redis
+    env_file:
+      - .env       
+    ports:
+      - "${BACKEND_PORT}:3000"
+    entrypoint: ["npm", "run", "start"]
+  frontend:
+    restart: always
+    container_name: frontend
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - "${FRONTEND_PORT}:3000"
+    entrypoint: ["yarn", "dev"]

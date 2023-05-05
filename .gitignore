@@ -1,0 +1,5 @@
+.DS_Store
+.env
+backend/node_modules
+frontend/node_modules
+database/pgdata
