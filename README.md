@@ -1,12 +1,12 @@
-### FASTIFY + PG + REDIS + VUETIFY
+# FASTIFY + PG + REDIS + VUETIFY
 
-#### Prepare
+## Prepare
 
 ```bash
 chmod +x ./run.sh
 ```
 
-#### Run
+## Run
 
 ```bash
 ./run.sh dev
@@ -18,17 +18,17 @@ or
 ./run.sh prod
 ```
 
-#### Frontend
+## Frontend
 
 All connection properties in the `.env` file
 
-#### Backend
+## Backend
 
 All connection properties in the `.env` file
 
 Endpoints match: `/api/foo` → `backend/routes/foo/index.js`
 
-#### Database
+## Database
 
 All connection properties in the `.env` file
 
@@ -36,7 +36,7 @@ The initial db scripts should be placed in: `database/initdb` (runs only once if
 
 To clean the database - remove `database/pgdata` dir
 
-#### Redis
+## Redis
 
 All connection properties in the `.env` file
 
