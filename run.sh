@@ -18,10 +18,8 @@ else
   exit 1
 fi
 
-function sha256sum2() { openssl sha256 "$@" | awk '{print $2}'; }
-
 function gen_passwd(){
-  echo "$RANDOM`date +%s`$RANDOM" | sha256sum2 | base64 | head -c $1
+  echo "$RANDOM`date +%s`$RANDOM" | sha256sum | base64 | head -c $1
 }
 
 function add_env(){
@@ -41,9 +39,8 @@ if [ $? -eq 1 ]; then
   add_env DB_USER $PROJECT_NAME
   add_env DB_PASSWORD $(gen_passwd 32)
   add_env REDIS_PORT 6379
-
 fi
-exit 1
+
 
 if [ $MODE = 'DEV' ]; then
   docker-compose -f $COMPOSE_FILE up --build 
