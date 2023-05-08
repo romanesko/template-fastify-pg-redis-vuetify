@@ -1,7 +1,5 @@
 FROM node:20-alpine as backend_builder
 WORKDIR /app
-COPY . ./
-COPY package*.json ./
+COPY . .
 RUN npm install
-RUN npm install fastify-cli --global
 

@@ -39,6 +39,7 @@ services:
       - "${BACKEND_PORT}:3000"
     volumes:
       - ./backend:/app
+      - /app/node_modules
     entrypoint: ["npm", "run", "dev"]
   frontend:
     # restart: always
