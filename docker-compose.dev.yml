@@ -2,7 +2,7 @@ version: "3.3"
 services:
   db:
     restart: always
-    container_name: db-${PROJECT_NAME}
+    container_name: ${PROJECT_NAME}-db
     image: postgres:15.2
     environment:
       POSTGRES_DB: "${DB_DATABASE}"
@@ -20,13 +20,13 @@ services:
       timeout: 10s
       retries: 5
   redis:
-    container_name: redis-${PROJECT_NAME}
+    container_name: ${PROJECT_NAME}-redis
     image: redis:7.0-alpine
     ports: 
       - "${REDIS_PORT}:6379"
   backend:
     restart: always
-    container_name: backend-${PROJECT_NAME}
+    container_name: ${PROJECT_NAME}-backend
     build:
       context: backend
       dockerfile: Dockerfile
@@ -43,7 +43,7 @@ services:
     entrypoint: ["npm", "run", "dev"]
   frontend:
     # restart: always
-    container_name: frontend-${PROJECT_NAME}
+    container_name: ${PROJECT_NAME}-frontend
     build:
       context: frontend
       dockerfile: Dockerfile
